@@ -1,3 +1,5 @@
+# I abandoned this solution
+
 # Example
 # keep track of which directory you're in
 # current_dir = example
