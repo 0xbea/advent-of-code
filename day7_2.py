@@ -19,7 +19,7 @@ def changeDir(dir_marker, target):  # updates directory structure and marker
 def trackSize(dir_marker, file_size):  # updates size tracker
     path = ""
     for marker in dir_marker:
-        path += ("_" + marker)
+        path += (marker + "/")
         if path not in size_tracker:
             size_tracker[path] = int(file_size)
         else:
@@ -42,9 +42,9 @@ with open('./inputs/day7.txt', 'r') as input:
     # print(current_dir)
     print(dir_marker)
     print(size_tracker)
-    free_space = 70000000 - size_tracker["_/"]
+    free_space = 70000000 - size_tracker["//"]
     space_needed = 30000000 - free_space
-    candidate = "_/"
+    candidate = "//"
     for key in size_tracker:
         if size_tracker[key] >= space_needed:
             print(key)

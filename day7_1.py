@@ -19,7 +19,7 @@ def changeDir(dir_marker, target):  # updates directory structure and marker
 def trackSize(dir_marker, file_size):  # updates size tracker
     path = ""
     for marker in dir_marker:
-        path += ("_" + marker)
+        path += (marker + "/")
         if path not in size_tracker:
             size_tracker[path] = int(file_size)
         else:
