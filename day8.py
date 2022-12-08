@@ -23,16 +23,19 @@ with open('./inputs/day8.txt', 'r') as input:
 # print(num_trees)
 # print(length)
 
+
+def checkInvisXaxis(x, y):
+    # check invis horizontally - True or False
+    return True
+
+
+def checkInvisYaxis(x, y):
+    # check invis vertically - True or False
+    return True
+
+
 # start finding invisible trees
 num_invis = num_trees
-
-# trees on top and bottom are visible
-# num_invis -= (2 * length)
-
-# trees on sides are visible - exclude already counted top & bottom
-num_invis -= (2 * (height - 2))
-
-# find invisible trees
 for y in forest:  # 0 - 98
     x = 0
     for tree in forest[y]:
@@ -40,5 +43,9 @@ for y in forest:  # 0 - 98
         if y == 0:  # top trees
             num_invis -= 1
         elif x == 0:
+            num_invis -= 1
+        elif checkInvisXaxis(x, y):
+            num_invis -= 1
+        elif checkInvisYaxis(x, y):
             num_invis -= 1
         x += 1
