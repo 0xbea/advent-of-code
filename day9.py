@@ -14,32 +14,34 @@ print(tail_pos_dict)
 
 def moveHeadTail(dir, times):  # str, int
     i = 0
+    global tail_length, tail_pos_dict
     while i < times:
+        moveHead(dir)
         j = 0
-        global tail_length
         while j < (tail_length - 1):  # less than number of knots in tail
-            global tail_pos_dict
             # print(head_pos, tail_pos)
-            x_head = tail_pos_dict[j][0]
-            y_head = tail_pos_dict[j][1]
-            match dir:
-                case 'U':
-                    tail_pos_dict[j] = (x_head, y_head + 1)
-                case 'D':
-                    tail_pos_dict[j] = (x_head, y_head - 1)
-                case 'L':
-                    tail_pos_dict[j] = (x_head - 1, y_head)
-                case 'R':
-                    tail_pos_dict[j] = (x_head + 1, y_head)
-                # calculate distance and move tail if needed
-            # tail_pos_dict[j] = head_pos  # update head pos
-            dist(j)
+            dist(j)  # here is where u snake if needed
             j += 1
         print(tail_pos_dict)
         # add position of last knot to positions tracker
         if tail_pos_dict[tail_length - 1] not in tail_pos_tracker:
             tail_pos_tracker.append(tail_pos_dict[tail_length - 1])
         i += 1
+
+
+def moveHead(dir):
+    global tail_pos_dict
+    x_head = tail_pos_dict[0][0]
+    y_head = tail_pos_dict[0][1]
+    match dir:
+        case 'U':
+            tail_pos_dict[0] = (x_head, y_head + 1)
+        case 'D':
+            tail_pos_dict[0] = (x_head, y_head - 1)
+        case 'L':
+            tail_pos_dict[0] = (x_head - 1, y_head)
+        case 'R':
+            tail_pos_dict[0] = (x_head + 1, y_head)
 
 
 def dist(j):
@@ -61,8 +63,8 @@ def shiftTail(j):
     tail_num = j+1
     # head_pos = tail_pos_dict[j]
     tail_pos = tail_pos_dict[tail_num]
-    x_head = tail_pos_dict[j+1][0]
-    y_head = tail_pos_dict[j+1][1]
+    x_head = tail_pos_dict[j][0]
+    y_head = tail_pos_dict[j][1]
     x_tail = tail_pos_dict[tail_num][0]
     y_tail = tail_pos_dict[tail_num][1]
     x_diff = x_head - x_tail
@@ -97,7 +99,7 @@ def shiftTail(j):
     tail_pos_dict[tail_num] = tail_pos
 
 
-with open('./inputs/day9_ex2.txt', 'r') as input:
+with open('./inputs/day9.txt', 'r') as input:
     for line in input:
         line = line.strip('\n').split()
         # print(line)
