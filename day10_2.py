@@ -1,15 +1,20 @@
 cycle = 1
 X = 1
-signalSum = 0
+screen = ''
 
 
-def cycleCheck():
-    global cycle, X, signalSum
-    if cycle in [20, 60, 100, 140, 180, 220]:
-        signalStrength = cycle * X
-        signalSum += signalStrength
-    if cycle == 221:
-        print(signalSum)
+def draw():
+    global cycle, X, screen
+    CRT_pos = (cycle - 1) % 40  # 0 - 39
+    sprite_pos = [X-1, X, X+1]
+    # print(sprite_pos)
+    if CRT_pos in sprite_pos:
+        screen += '#'
+    else:
+        screen += '.'
+    if cycle % 40 == 0:
+        print(screen)
+        screen = ''
 
 
 def execute(command, value):
@@ -17,16 +22,17 @@ def execute(command, value):
     match command:
         case 'noop':
             # begin execution and do nothing
-            cycleCheck()
+            draw()
             cycle += 1  # finish and move onto next cycle
         case 'addx':
+            value = int(value)
             # begin execution at start of current cycle
-            cycleCheck()
+            draw()
             cycle += 1  # move onto next cycle
             # finish during this cycle
-            cycleCheck()
+            draw()
             cycle += 1
-            X += int(value)  # set value after th cycle finish
+            X += int(value)
 
 
 with open('./inputs/day10.txt', 'r') as input:
